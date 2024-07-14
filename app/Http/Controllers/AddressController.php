@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\AddressRequest;
 use App\Models\User;
 use App\Models\Address;
 use Illuminate\Http\Request;
@@ -29,11 +30,9 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,User $user)
+    public function store(AddressRequest $request,User $user)
     {
-        $user->addresses()->create($request->validate([
-            'address'=>'required'
-        ]));
+        $user->addresses()->create($request->validated());
         return redirect()->route('users.show',$user);
     }
 
@@ -56,11 +55,9 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,User $user,Address $address)
+    public function update(AddressRequest $request,User $user,Address $address)
     {
-        $address->update($request->validate([
-            'address'=>'required'
-        ]));
+        $address->update($request->validated());
         return redirect()->route('users.show',$user);
     }
 
